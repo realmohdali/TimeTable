@@ -11,12 +11,12 @@ public class DatabaseManagement {
 
     DatabaseManagement(SQLiteDatabase database) {
         this.database = database;
-        database.execSQL("CREATE TABLE IF NOT EXISTS Monday (_id, time VARCHAR, subject VARCHAR)");
-        database.execSQL("CREATE TABLE IF NOT EXISTS Tuesday (_id, time VARCHAR, subject VARCHAR)");
-        database.execSQL("CREATE TABLE IF NOT EXISTS Wednesday (_id, time VARCHAR, subject VARCHAR)");
-        database.execSQL("CREATE TABLE IF NOT EXISTS Thursday (_id, time VARCHAR, subject VARCHAR)");
-        database.execSQL("CREATE TABLE IF NOT EXISTS Friday (_id, time VARCHAR, subject VARCHAR)");
-        database.execSQL("CREATE TABLE IF NOT EXISTS Saturday (_id, time VARCHAR, subject VARCHAR)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS Monday (_id INTEGER PRIMARY KEY AUTOINCREMENT, time VARCHAR, subject VARCHAR)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS Tuesday (_id INTEGER PRIMARY KEY AUTOINCREMENT, time VARCHAR, subject VARCHAR)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS Wednesday (_id INTEGER PRIMARY KEY AUTOINCREMENT, time VARCHAR, subject VARCHAR)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS Thursday (_id INTEGER PRIMARY KEY AUTOINCREMENT, time VARCHAR, subject VARCHAR)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS Friday (_id INTEGER PRIMARY KEY AUTOINCREMENT, time VARCHAR, subject VARCHAR)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS Saturday (_id INTEGER PRIMARY KEY AUTOINCREMENT, time VARCHAR, subject VARCHAR)");
     }
 
     public List<ListData> showAll(String table) {

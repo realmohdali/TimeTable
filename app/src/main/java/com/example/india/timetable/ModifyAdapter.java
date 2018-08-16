@@ -55,6 +55,34 @@ class ModifyAdapter extends RecyclerView.Adapter<ModifyAdapter.ViewHolder> {
                 Calendar mCurrentTime = Calendar.getInstance();
                 final int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mCurrentTime.get(Calendar.MINUTE);
+                final TimePickerDialog pickerDialog1 = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        String am_pm;
+                        if (hourOfDay < 12) {
+                            am_pm = "AM";
+                        } else {
+                            am_pm = "PM";
+                        }
+                        if (hourOfDay > 12) {
+                            hourOfDay = hourOfDay - 12;
+                        }
+                        time += String.valueOf(hourOfDay) + ":";
+                        if (minute < 10) {
+                            time += "0" + String.valueOf(minute);
+                        } else {
+                            time += String.valueOf(minute);
+                        }
+                        time += am_pm;
+
+                        holder.time.setText(time);
+
+                        String table = days[day];
+                        databaseManagement.edit(table, time, subject, id);
+                    }
+                }, hour, minute, false);
+                pickerDialog1.setTitle("To");
+
                 TimePickerDialog pickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -67,11 +95,7 @@ class ModifyAdapter extends RecyclerView.Adapter<ModifyAdapter.ViewHolder> {
                         if (hourOfDay > 12) {
                             hourOfDay = hourOfDay - 12;
                         }
-                        if (hourOfDay < 10) {
-                            time += "0" + String.valueOf(hourOfDay) + ":";
-                        } else {
-                            time += String.valueOf(hourOfDay) + ":";
-                        }
+                        time += String.valueOf(hourOfDay) + ":";
                         if (minute < 10) {
                             time += "0" + String.valueOf(minute);
                         } else {
@@ -79,43 +103,11 @@ class ModifyAdapter extends RecyclerView.Adapter<ModifyAdapter.ViewHolder> {
                         }
                         time += am_pm;
                         time += " To ";
+                        pickerDialog1.show();
                     }
                 }, hour, minute, false);
                 pickerDialog.setTitle("From");
                 pickerDialog.show();
-
-                TimePickerDialog pickerDialog1 = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String am_pm;
-                        if (hourOfDay < 12) {
-                            am_pm = "AM";
-                        } else {
-                            am_pm = "PM";
-                        }
-                        if (hourOfDay > 12) {
-                            hourOfDay = hourOfDay - 12;
-                        }
-                        if (hourOfDay < 10) {
-                            time += "0" + String.valueOf(hourOfDay) + ":";
-                        } else {
-                            time += String.valueOf(hourOfDay) + ":";
-                        }
-                        if (minute < 10) {
-                            time += "0" + String.valueOf(minute);
-                        } else {
-                            time += String.valueOf(minute);
-                        }
-                        time += am_pm;
-
-                        String table = days[day];
-                        databaseManagement.edit(table, time, subject, id);
-
-                        holder.time.setText(time);
-                    }
-                }, hour, minute, false);
-                pickerDialog1.setTitle("To");
-                pickerDialog1.show();
             }
         });
         holder.subject.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +116,7 @@ class ModifyAdapter extends RecyclerView.Adapter<ModifyAdapter.ViewHolder> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Subject");
                 final EditText input = new EditText(context);
+                input.setText(list.get(position).getSubject());
                 builder.setView(input);
 
                 builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
@@ -131,10 +124,11 @@ class ModifyAdapter extends RecyclerView.Adapter<ModifyAdapter.ViewHolder> {
                     public void onClick(DialogInterface dialog, int which) {
                         String table = days[day];
                         if (time == "") {
-                            list.get(position).getTime();
+                            time = list.get(position).getTime();
                         }
-                        databaseManagement.edit(table, time, subject, id);
+                        String sub = input.getText().toString();
                         holder.subject.setText(input.getText().toString());
+                        databaseManagement.edit(table, time, sub, id);
                     }
                 });
 

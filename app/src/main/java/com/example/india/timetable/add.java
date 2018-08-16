@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -124,8 +125,16 @@ public class add extends AppCompatActivity {
 
     public void save(View v) {
         String subject = sub.getText().toString();
-        String table = days[s];
-        databaseManagement.insert(table, time, subject);
+        if (subject.equals("") || subject == null || subject.isEmpty()) {
+            Toast.makeText(this, "Don't leave any field blank", Toast.LENGTH_SHORT).show();
+        } else {
+            String table = days[s];
+            databaseManagement.insert(table, time, subject);
+            sub.setText("");
+            frm.setText(R.string.from);
+            t.setText(R.string.to);
+            Toast.makeText(this, "Successfully added", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

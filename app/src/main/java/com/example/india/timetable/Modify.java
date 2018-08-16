@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,7 +67,23 @@ public class Modify extends AppCompatActivity implements AdapterView.OnItemSelec
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        List<ListData> list = new ArrayList<>();
+        list = new ArrayList<>();
+    }
+
+    @Override
+    protected void onPause() {
+        if (s == 5) {
+            spinner.setSelection(s - 1);
+        } else {
+            spinner.setSelection(s + 1);
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        spinner.setSelection(s);
+        super.onResume();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -103,37 +118,31 @@ public class Modify extends AppCompatActivity implements AdapterView.OnItemSelec
                 list = databaseManagement.showAll(days[position]);
                 adapter = new ModifyAdapter(list, Modify.this, database, s);
                 recyclerView.setAdapter(adapter);
-                Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new ModifyAdapter(list, Modify.this, database, s);
                 recyclerView.setAdapter(adapter);
-                Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new ModifyAdapter(list, Modify.this, database, s);
                 recyclerView.setAdapter(adapter);
-                Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new ModifyAdapter(list, Modify.this, database, s);
                 recyclerView.setAdapter(adapter);
-                Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 4:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new ModifyAdapter(list, Modify.this, database, s);
                 recyclerView.setAdapter(adapter);
-                Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 5:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new ModifyAdapter(list, Modify.this, database, s);
                 recyclerView.setAdapter(adapter);
-                Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
         }
     }
