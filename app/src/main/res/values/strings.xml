@@ -4,4 +4,7 @@
     <string name="subject">SUBJECT</string>
     <string name="edit">Modify</string>
     <string name="today">Today</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="save">save</string>
 </resources>

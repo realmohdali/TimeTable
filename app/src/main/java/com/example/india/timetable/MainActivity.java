@@ -1,6 +1,7 @@
 package com.example.india.timetable;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -25,6 +26,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private Spinner spinner;
     private Calendar calendar;
     private int s;
+    private RecyclerView recyclerView;
+    private myAdapter adapter;
+    private List<ListData> list;
+    private SQLiteDatabase database;
+    private DatabaseManagement databaseManagement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        database = openOrCreateDatabase("data", MODE_PRIVATE, null);
+        databaseManagement = new DatabaseManagement(database);
 
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
@@ -52,52 +61,59 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        List<ListData> list = new ArrayList<>();
-
-        //Generate Dummy data
-        for (int i = 0; i < 10; i++) {
-            ListData listData = new ListData("8:00AM To 10AM", "Some Subject");
-            list.add(listData);
-        }
-
-        RecyclerView.Adapter adapter = new myAdapter(list);
-        recyclerView.setAdapter(adapter);
+        list = new ArrayList<>();
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
+                list = databaseManagement.showAll(days[position]);
+                adapter = new myAdapter(list);
+                recyclerView.setAdapter(adapter);
                 Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 1:
+                list = databaseManagement.showAll(days[position]);
+                adapter = new myAdapter(list);
+                recyclerView.setAdapter(adapter);
                 Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 2:
+                list = databaseManagement.showAll(days[position]);
+                adapter = new myAdapter(list);
+                recyclerView.setAdapter(adapter);
                 Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 3:
+                list = databaseManagement.showAll(days[position]);
+                adapter = new myAdapter(list);
+                recyclerView.setAdapter(adapter);
                 Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 4:
+                list = databaseManagement.showAll(days[position]);
+                adapter = new myAdapter(list);
+                recyclerView.setAdapter(adapter);
                 Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
             case 5:
+                list = databaseManagement.showAll(days[position]);
+                adapter = new myAdapter(list);
+                recyclerView.setAdapter(adapter);
                 Toast.makeText(this, "" + days[position], Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
     public void today(View v) {
-        if (s >= 0) {
-            spinner.setSelection(s);
-        }
+
     }
 
     @Override
@@ -118,6 +134,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Intent intent = new Intent(this, Modify.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
+                break;
+            case R.id.today:
+                if (s >= 0) {
+                    spinner.setSelection(s);
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

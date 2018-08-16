@@ -25,9 +25,10 @@ public class DatabaseManagement {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
+                int id = cursor.getInt(0);
                 String time = cursor.getString(1);
                 String subject = cursor.getString(2);
-                ListData data = new ListData(time, subject);
+                ListData data = new ListData(time, subject, id);
                 list.add(data);
             } while (cursor.moveToNext());
         }
@@ -36,5 +37,13 @@ public class DatabaseManagement {
 
     public void insert(String table, String time, String subject) {
         database.execSQL("INSERT INTO " + table + " (time, subject) VALUES ('" + time + "','" + subject + "')");
+    }
+
+    public void edit(String table, String time, String subject, int id) {
+        database.execSQL("UPDATE " + table + " SET time = '" + time + "', subject = '" + subject + "' WHERE _id = '" + id + "'");
+    }
+
+    public void remove(String table, int id) {
+        database.execSQL("DELETE FROM " + table + " WHERE _id = '" + id + "'");
     }
 }
