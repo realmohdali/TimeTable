@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TimeTable</string>
+    <string name="timing">TIMING</string>
+    <string name="subject">SUBJECT</string>
+    <string name="edit">Modify</string>
+    <string name="today">Today</string>
+</resources>
