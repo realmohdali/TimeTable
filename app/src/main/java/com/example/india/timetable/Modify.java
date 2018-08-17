@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -27,12 +28,12 @@ public class Modify extends AppCompatActivity implements AdapterView.OnItemSelec
     private String days[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     private Spinner spinner;
     private RecyclerView recyclerView;
-    private Calendar calendar;
     private int s;
     private ModifyAdapter adapter;
     private List<ListData> list;
     private SQLiteDatabase database;
     private DatabaseManagement databaseManagement;
+    private int selectedDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class Modify extends AppCompatActivity implements AdapterView.OnItemSelec
 
         spinner.setOnItemSelectedListener(this);
 
-        calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
         s = calendar.get(Calendar.DAY_OF_WEEK) - 2;
 
@@ -106,7 +107,7 @@ public class Modify extends AppCompatActivity implements AdapterView.OnItemSelec
 
     public void add(View view) {
         Intent intent = new Intent(this, add.class);
-        intent.putExtra("day", s);
+        intent.putExtra("day", selectedDay);
         startActivity(intent);
         overridePendingTransition(0, 0);
     }
@@ -116,33 +117,39 @@ public class Modify extends AppCompatActivity implements AdapterView.OnItemSelec
         switch (position) {
             case 0:
                 list = databaseManagement.showAll(days[position]);
-                adapter = new ModifyAdapter(list, Modify.this, database, s);
+                adapter = new ModifyAdapter(list, Modify.this, database, position);
                 recyclerView.setAdapter(adapter);
+                selectedDay = position;
                 break;
             case 1:
                 list = databaseManagement.showAll(days[position]);
-                adapter = new ModifyAdapter(list, Modify.this, database, s);
+                adapter = new ModifyAdapter(list, Modify.this, database, position);
                 recyclerView.setAdapter(adapter);
+                selectedDay = position;
                 break;
             case 2:
                 list = databaseManagement.showAll(days[position]);
-                adapter = new ModifyAdapter(list, Modify.this, database, s);
+                adapter = new ModifyAdapter(list, Modify.this, database, position);
                 recyclerView.setAdapter(adapter);
+                selectedDay = position;
                 break;
             case 3:
                 list = databaseManagement.showAll(days[position]);
-                adapter = new ModifyAdapter(list, Modify.this, database, s);
+                adapter = new ModifyAdapter(list, Modify.this, database, position);
                 recyclerView.setAdapter(adapter);
+                selectedDay = position;
                 break;
             case 4:
                 list = databaseManagement.showAll(days[position]);
-                adapter = new ModifyAdapter(list, Modify.this, database, s);
+                adapter = new ModifyAdapter(list, Modify.this, database, position);
                 recyclerView.setAdapter(adapter);
+                selectedDay = position;
                 break;
             case 5:
                 list = databaseManagement.showAll(days[position]);
-                adapter = new ModifyAdapter(list, Modify.this, database, s);
+                adapter = new ModifyAdapter(list, Modify.this, database, position);
                 recyclerView.setAdapter(adapter);
+                selectedDay = position;
                 break;
         }
     }
