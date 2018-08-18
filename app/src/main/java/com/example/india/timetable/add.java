@@ -17,7 +17,8 @@ import java.util.Calendar;
 
 public class add extends AppCompatActivity {
 
-    private String time;
+    private String from;
+    private String to;
     private TextView frm, t;
     private EditText sub;
     private DatabaseManagement databaseManagement;
@@ -34,16 +35,18 @@ public class add extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Add");
 
         Intent intent = getIntent();
         s = intent.getExtras().getInt("day");
+
+        getSupportActionBar().setTitle(days[s]);
 
         frm = findViewById(R.id.from);
         t = findViewById(R.id.to);
         sub = findViewById(R.id.sub);
 
-        time = "";
+        from = frm.getText().toString();
+        to = t.getText().toString();
 
         SQLiteDatabase database = openOrCreateDatabase("data", MODE_PRIVATE, null);
         databaseManagement = new DatabaseManagement(database);
@@ -56,7 +59,7 @@ public class add extends AppCompatActivity {
         TimePickerDialog pickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String from = "";
+                from = "";
                 String am_pm;
                 if (hourOfDay < 12) {
                     am_pm = "AM";
@@ -66,21 +69,16 @@ public class add extends AppCompatActivity {
                 if (hourOfDay > 12) {
                     hourOfDay = hourOfDay - 12;
                 }
-                time += String.valueOf(hourOfDay) + ":";
                 from += String.valueOf(hourOfDay) + ":";
                 if (minute < 10) {
-                    time += "0" + String.valueOf(minute);
                     from += "0" + String.valueOf(minute);
                 } else {
-                    time += String.valueOf(minute);
                     from += String.valueOf(minute);
                 }
-                time += am_pm;
                 from += am_pm;
 
                 frm.setText(from);
 
-                time += " To ";
             }
         }, hour, minute, false);
         pickerDialog.setTitle(R.string.from);
@@ -94,7 +92,7 @@ public class add extends AppCompatActivity {
         TimePickerDialog pickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String to = "";
+                to = "";
                 String am_pm;
                 if (hourOfDay < 12) {
                     am_pm = "AM";
@@ -104,17 +102,13 @@ public class add extends AppCompatActivity {
                 if (hourOfDay > 12) {
                     hourOfDay = hourOfDay - 12;
                 }
-                time += String.valueOf(hourOfDay) + ":";
                 to += String.valueOf(hourOfDay) + ":";
 
                 if (minute < 10) {
-                    time += "0" + String.valueOf(minute);
                     to += "0" + String.valueOf(minute);
                 } else {
-                    time += String.valueOf(minute);
                     to += String.valueOf(minute);
                 }
-                time += am_pm;
                 to += am_pm;
                 t.setText(to);
             }
@@ -129,7 +123,7 @@ public class add extends AppCompatActivity {
             Toast.makeText(this, "Don't leave any field blank", Toast.LENGTH_SHORT).show();
         } else {
             String table = days[s];
-            databaseManagement.insert(table, time, subject);
+            databaseManagement.insert(table, from, to, subject);
             sub.setText("");
             frm.setText(R.string.from);
             t.setText(R.string.to);

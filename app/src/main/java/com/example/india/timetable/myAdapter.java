@@ -25,7 +25,8 @@ class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.time.setText(list.get(position).getTime());
+        holder.frm.setText(list.get(position).getFrm());
+        holder.to.setText(list.get(position).getT());
         holder.subject.setText(list.get(position).getSubject());
     }
 
@@ -35,11 +36,12 @@ class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView time, subject;
+        TextView frm, to, subject;
 
         ViewHolder(View itemView) {
             super(itemView);
-            time = itemView.findViewById(R.id.time);
+            frm = itemView.findViewById(R.id.frm);
+            to = itemView.findViewById(R.id.to);
             subject = itemView.findViewById(R.id.subject);
         }
     }

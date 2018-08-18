@@ -54,9 +54,8 @@ public class Modify extends AppCompatActivity implements AdapterView.OnItemSelec
 
         spinner.setOnItemSelectedListener(this);
 
-        Calendar calendar = Calendar.getInstance();
-
-        s = calendar.get(Calendar.DAY_OF_WEEK) - 2;
+        Intent intent = getIntent();
+        s = intent.getExtras().getInt("day");
 
         if (s >= 0) {
             spinner.setSelection(s);

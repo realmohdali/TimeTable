@@ -1,17 +1,22 @@
 package com.example.india.timetable;
 
 public class ListData {
-    private String time, subject;
+    private String frm, t, subject;
     private int id;
 
-    ListData(String time, String subject, int id) {
-        this.time = time;
+    ListData(String frm, String t, String subject, int id) {
+        this.frm = frm;
+        this.t = t;
         this.subject = subject;
         this.id = id;
     }
 
-    public String getTime() {
-        return time;
+    public String getFrm() {
+        return frm;
+    }
+
+    public String getT() {
+        return t;
     }
 
     public String getSubject() {

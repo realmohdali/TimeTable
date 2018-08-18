@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private List<ListData> list;
     private SQLiteDatabase database;
     private DatabaseManagement databaseManagement;
+    private int day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (s >= 0) {
             spinner.setSelection(s);
         }
+
+        day = s;
 
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -92,31 +95,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 list = databaseManagement.showAll(days[position]);
                 adapter = new myAdapter(list);
                 recyclerView.setAdapter(adapter);
+                day = position;
                 break;
             case 1:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new myAdapter(list);
                 recyclerView.setAdapter(adapter);
+                day = position;
                 break;
             case 2:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new myAdapter(list);
                 recyclerView.setAdapter(adapter);
+                day = position;
                 break;
             case 3:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new myAdapter(list);
                 recyclerView.setAdapter(adapter);
+                day = position;
                 break;
             case 4:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new myAdapter(list);
                 recyclerView.setAdapter(adapter);
+                day = position;
                 break;
             case 5:
                 list = databaseManagement.showAll(days[position]);
                 adapter = new myAdapter(list);
                 recyclerView.setAdapter(adapter);
+                day = position;
                 break;
         }
     }
@@ -141,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (item.getItemId()) {
             case R.id.edit:
                 Intent intent = new Intent(this, Modify.class);
+                intent.putExtra("day", day);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 break;
